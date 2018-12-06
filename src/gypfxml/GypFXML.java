@@ -1,5 +1,10 @@
 package gypfxml;
 
+import gypfxml.ui.ScreenResource;
+import gypfxml.model.Inventory;
+import gypfxml.model.Part;
+import gypfxml.model.Product;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +19,11 @@ public class GypFXML extends Application {
     
     private static GypFXML instance;
     
+    private Inventory inventory;
+    
+    private Part activePart;
+    private Product activeProduct;
+    
     private Stage stage;
     private Map<String, Scene> scenes;
     
@@ -22,6 +32,8 @@ public class GypFXML extends Application {
         this.stage = stage;
         scenes = new HashMap<>();
         instance = this;
+        activePart = null;
+        activeProduct = null;
         showScene(ScreenResource.MAIN);
     }
     
@@ -33,7 +45,7 @@ public class GypFXML extends Application {
                 Parent parent = FXMLLoader.load(rsc);
                 scene = new Scene(parent);
                 scenes.put(resourceName, scene);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println(e);
             }
         }
@@ -47,5 +59,21 @@ public class GypFXML extends Application {
     
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void setActiveProduct(Product activeProduct) {
+        this.activeProduct = activeProduct;
+    }
+    
+    public Product getActiveProduct() {
+        return activeProduct;
+    }
+    
+    public void setActivePart(Part activePart) {
+        this.activePart = activePart;
+    }
+    
+    public Part getActivePart() {
+        return activePart;
     }
 }

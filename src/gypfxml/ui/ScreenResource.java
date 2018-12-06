@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package gypfxml;
+package gypfxml.ui;
 
-/**
- *
- * @author IcyCode
- */
 public class ScreenResource {
     public static final String MAIN = "ui/main/MainScreen.fxml";
     public static final String ADD_PART = "ui/add_part/AddPartScreen.fxml";

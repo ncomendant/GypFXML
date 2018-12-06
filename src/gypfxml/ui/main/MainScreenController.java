@@ -7,13 +7,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import gypfxml.GypFXML;
+import gypfxml.ui.ScreenResource;
+
 
 public class MainScreenController implements Initializable {
-    
-    @FXML
-    private Label label;
-    
+        
     @FXML
     private void handleSearchPart(ActionEvent event) {
         
@@ -21,7 +20,7 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleAddPart(ActionEvent event) {
-        
+        GypFXML.getInstance().showScene(ScreenResource.ADD_PART);
     }
     
     @FXML
