@@ -33,6 +33,7 @@ public class GypFXML extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        stage.setTitle("Inventory Management Application");
         scenes = new HashMap<>();
         eventManager = new EventManager();
         instance = this;
