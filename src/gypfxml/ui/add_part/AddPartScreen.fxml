@@ -19,7 +19,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Label>
-            <RadioButton mnemonicParsing="false" onAction="#handleInHouseSelect" selected="true" text="In-House" HBox.hgrow="ALWAYS">
+            <RadioButton fx:id="inHouseRadio" mnemonicParsing="false" onAction="#handleInHouseSelect" selected="true" text="In-House" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="25.0" />
                </HBox.margin>
@@ -27,7 +27,7 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" onAction="#handleOutsourcedSelect" text="Outsourced" toggleGroup="$type" HBox.hgrow="ALWAYS">
+            <RadioButton fx:id="outsourcedRadio" mnemonicParsing="false" onAction="#handleOutsourcedSelect" text="Outsourced" toggleGroup="$type" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="25.0" />
                </HBox.margin>
