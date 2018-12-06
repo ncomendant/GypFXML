@@ -6,6 +6,7 @@ import gypfxml.ui.ScreenResource;
 import gypfxml.core.Inventory;
 import gypfxml.core.Part;
 import gypfxml.core.Product;
+import gypfxml.test.Test;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -50,12 +51,13 @@ public class GypFXML extends Application {
         instance = this;
         activePart = null;
         activeProduct = null;
-        nextPartId = 0;
-        nextProductId = 0;
+        nextPartId = 1;
+        nextProductId = 1;
         inventory = new Inventory();
         filteredParts = new FilteredList<>(inventory.getParts(), p -> true);
         filteredProducts = new FilteredList<>(inventory.getProducts(), p -> true);
         showScene(ScreenResource.MAIN);
+        Test.addRandomParts(this, 100);
     }
     
     public void showScene(String resourceName) {
