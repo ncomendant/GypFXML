@@ -12,8 +12,6 @@ import gypfxml.core.Part;
 import gypfxml.core.Product;
 import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableView;
 
 
