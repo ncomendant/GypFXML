@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gypfxml;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,22 +12,40 @@ import javafx.stage.Stage;
 
 public class GypFXML extends Application {
     
+    private static GypFXML instance;
+    
+    private Stage stage;
+    private Map<String, Scene> scenes;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        URL rsc = getClass().getResource("ui/main/MainScreen.fxml");
-        Parent root = FXMLLoader.load(rsc);
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+        this.stage = stage;
+        scenes = new HashMap<>();
+        instance = this;
+        showScene(ScreenResource.MAIN);
     }
-
-    /**
-     * @param args the command line arguments
-     */
+    
+    public void showScene(String resourceName) {
+        Scene scene = scenes.get(resourceName);
+        if (scene == null) {
+            URL rsc = getClass().getResource(resourceName);
+            try {
+                Parent parent = FXMLLoader.load(rsc);
+                scene = new Scene(parent);
+                scenes.put(resourceName, scene);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        this.stage.setScene(scene);
+        this.stage.show();
+    }
+    
+    public static GypFXML getInstance() {
+        return instance;
+    }
+    
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
