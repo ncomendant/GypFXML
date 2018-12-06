@@ -1,4 +1,4 @@
-package gypfxml.core;
+package gypfxml.model;
 
 import java.util.ArrayList;
 

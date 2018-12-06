@@ -1,4 +1,4 @@
-package gypfxml.core;
+package gypfxml.model;
 
 public class Outsourced extends Part {
 	private String companyName;
