@@ -28,7 +28,7 @@ public class Inventory {
 	
 	public Product lookupProduct(int productID) {
             for (Product product : products) {
-                    if (productID == product.getProductId()) {
+                    if (productID == product.getProductID()) {
                             return product;
                     }
             }
@@ -59,4 +59,12 @@ public class Inventory {
 	public void updatePart(int partID) {
             //Defined solely to adhere to UML specifications
 	}
+        
+        public ObservableList<Product> getProducts() {
+            return products;
+        }
+        
+        public ObservableList<Part> getParts() {
+            return allParts;
+        }
 }

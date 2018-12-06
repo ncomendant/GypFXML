@@ -8,12 +8,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import gypfxml.GypFXML;
+import gypfxml.core.Part;
+import gypfxml.core.Product;
 import gypfxml.misc.Event;
-import gypfxml.misc.EventManager;
 import gypfxml.ui.ScreenResource;
+import javafx.scene.control.TableView;
 
 
 public class MainScreenController implements Initializable {
+    
+    @FXML
+    TableView<Part> partTable;
+    @FXML
+    TableView<Product> productTable;
         
     @FXML
     private void handleSearchPart(ActionEvent event) {
@@ -67,13 +74,15 @@ public class MainScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        EventManager eventManager = GypFXML.getInstance().getEventManager();
+        GypFXML app = GypFXML.getInstance();
         
-        eventManager.on(Event.SCREEN_CHANGED, (Object... data) -> {
+        app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.MAIN)) {
                 refresh();
             }
         });
+        
+        app.bindPartTable(partTable);
     }
     
 }

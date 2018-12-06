@@ -1,58 +1,76 @@
 package gypfxml.core;
 
-import java.util.ArrayList;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Product {
-	private ArrayList<Part> associatedParts;
-	private int productID;
-	private String name;
-	private double price;
-	private int inStock;
+	private ObservableList<Part> associatedParts;
+        private SimpleIntegerProperty productID;
+	private SimpleStringProperty name;
+	private SimpleDoubleProperty price;
+	private SimpleIntegerProperty inStock;
 	private int min;
 	private int max;
-	
-	public Product() {
-		associatedParts = new ArrayList<>();
-	}
+        
+        public Product() {
+            associatedParts = FXCollections.observableArrayList();
+            productID = new SimpleIntegerProperty();
+            name = new SimpleStringProperty();
+            price = new SimpleDoubleProperty();
+            inStock = new SimpleIntegerProperty();
+            min = 0;
+            max = 0;
+        }
 	
 	public void setName(String name) {
-		this.name = name;
+            this.name.set(name);
 	}
 	
 	public String getName() {
-		return name;
+            return name.get();
 	}
 	
 	public void setPrice(double price) {
-		this.price = price;
+            this.price.set(price);
 	}
 	
 	public double getPrice() {
-		return price;
+            return price.get();
 	}
 	
 	public void setInStock(int inStock) {
-		this.inStock = inStock;
+            this.inStock.set(inStock);
 	}
 	
 	public int getInStock() {
-		return inStock;
+            return this.inStock.get();
 	}
 	
 	public void setMin(int min) {
-		this.min = min;
+            this.min = min;
 	}
 	
 	public int getMin() {
-		return min;
+            return min;
 	}
 	
 	public void setMax(int max) {
-		this.max = max;
+            this.max = max;
 	}
 	
 	public int getMax() {
-		return max;
+            return max;
+	}
+        
+        public void setProductID(int productID) {
+            this.productID.set(productID);
+	}
+	
+	public int getProductID() {
+            return productID.get();
 	}
 	
 	public void addAssociatedPart(Part part) {
@@ -76,13 +94,5 @@ public class Product {
 			}
 		}
 		return null;
-	}
-	
-	public void setProductID(int productID) {
-		this.productID = productID;
-	}
-	
-	public int getProductId() {
-		return productID;
 	}
 }

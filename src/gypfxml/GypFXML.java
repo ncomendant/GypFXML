@@ -9,11 +9,16 @@ import gypfxml.core.Product;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.application.Application;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 
@@ -30,6 +35,9 @@ public class GypFXML extends Application {
     private Map<String, Scene> scenes;
     private EventManager eventManager;
     
+    private FilteredList<Part> filteredParts;
+    private FilteredList<Product> filteredProducts;
+    
     private int nextPartId;
     private int nextProductId;
     
@@ -45,6 +53,8 @@ public class GypFXML extends Application {
         nextPartId = 0;
         nextProductId = 0;
         inventory = new Inventory();
+        filteredParts = new FilteredList<>(inventory.getParts(), p -> true);
+        filteredProducts = new FilteredList<>(inventory.getProducts(), p -> true);
         showScene(ScreenResource.MAIN);
     }
     
@@ -65,10 +75,45 @@ public class GypFXML extends Application {
         this.stage.show();
     }
     
+    public void bindPartTable(TableView<Part> table) {
+        List<TableColumn<Part, ?>> columns = table.getColumns();
+        
+        TableColumn<Part, Integer> idCol = (TableColumn<Part, Integer>) columns.get(0);
+        idCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        
+        TableColumn<Part, String> nameCol = (TableColumn<Part, String>) columns.get(1);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Part, Integer> invCol = (TableColumn<Part, Integer>) columns.get(2);
+        invCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        
+        TableColumn<Part, Double> priceCol = (TableColumn<Part, Double>) columns.get(3);
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        table.setItems(filteredParts);        
+    }
+    
+    public void bindProductTable(TableView<Product> table) {
+        List<TableColumn<Product, ?>> columns = table.getColumns();
+        
+        TableColumn<Product, Integer> idCol = (TableColumn<Product, Integer>) columns.get(0);
+        idCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        
+        TableColumn<Product, String> nameCol = (TableColumn<Product, String>) columns.get(1);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Product, Integer> invCol = (TableColumn<Product, Integer>) columns.get(2);
+        invCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+        
+        TableColumn<Product, Double> priceCol = (TableColumn<Product, Double>) columns.get(3);
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        table.setItems(filteredProducts);
+    }
+    
     public void addPart(Part part) {
         part.setPartID(nextPartId++);
         inventory.addPart(part);
-        System.out.println("Done");
     }
     
     public void addProduct(Product product) {
