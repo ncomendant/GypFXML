@@ -2,8 +2,6 @@ package gypfxml.ui.add_part;
 
 import gypfxml.GypFXML;
 import gypfxml.misc.Event;
-import gypfxml.misc.EventManager;
-import gypfxml.model.Part;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
