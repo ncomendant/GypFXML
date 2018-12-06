@@ -30,6 +30,9 @@ public class GypFXML extends Application {
     private Map<String, Scene> scenes;
     private EventManager eventManager;
     
+    private int nextPartId;
+    private int nextProductId;
+    
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -39,6 +42,9 @@ public class GypFXML extends Application {
         instance = this;
         activePart = null;
         activeProduct = null;
+        nextPartId = 0;
+        nextProductId = 0;
+        inventory = new Inventory();
         showScene(ScreenResource.MAIN);
     }
     
@@ -57,6 +63,17 @@ public class GypFXML extends Application {
         this.stage.setScene(scene);
         this.eventManager.emit(Event.SCREEN_CHANGED, resourceName);
         this.stage.show();
+    }
+    
+    public void addPart(Part part) {
+        part.setPartID(nextPartId++);
+        inventory.addPart(part);
+        System.out.println("Done");
+    }
+    
+    public void addProduct(Product product) {
+        product.setProductID(nextProductId++);
+        inventory.addProduct(product);
     }
     
     public static GypFXML getInstance() {

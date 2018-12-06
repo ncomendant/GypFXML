@@ -2,6 +2,9 @@ package gypfxml.ui.add_part;
 
 import gypfxml.GypFXML;
 import gypfxml.misc.Event;
+import gypfxml.model.Inhouse;
+import gypfxml.model.Outsourced;
+import gypfxml.model.Part;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +51,32 @@ public class AddPartScreenController implements Initializable {
     
     @FXML
     private void handleSave(ActionEvent event) {
+        String name = nameInp.getText();
+        int inStock = Integer.parseInt(invInp.getText());
+        double price = Double.parseDouble(priceInp.getText());
+        int min = Integer.parseInt(minInp.getText());
+        int max = Integer.parseInt(maxInp.getText());
+        String machineCompany = machineCompanyInp.getText();
         
+        Part part;
+        if (inHouse) {
+            Inhouse inhousePart = new Inhouse();
+            inhousePart.setMachineID(Integer.parseInt(machineCompany));
+            part = inhousePart;
+        } else {
+            Outsourced outsourcedPart = new Outsourced();
+            outsourcedPart.setCompanyName(machineCompany);
+            part = outsourcedPart;
+        }
+        
+        part.setName(name);
+        part.setInStock(inStock);
+        part.setPrice(price);
+        part.setMin(min);
+        part.setMax(max);
+        
+        app.addPart(part);
+        GypFXML.getInstance().showScene(ScreenResource.MAIN);
     }
     
     @FXML
