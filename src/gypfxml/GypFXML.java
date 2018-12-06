@@ -1,5 +1,7 @@
 package gypfxml;
 
+import gypfxml.misc.Event;
+import gypfxml.misc.EventManager;
 import gypfxml.ui.ScreenResource;
 import gypfxml.model.Inventory;
 import gypfxml.model.Part;
@@ -26,11 +28,13 @@ public class GypFXML extends Application {
     
     private Stage stage;
     private Map<String, Scene> scenes;
+    private EventManager eventManager;
     
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         scenes = new HashMap<>();
+        eventManager = new EventManager();
         instance = this;
         activePart = null;
         activeProduct = null;
@@ -50,6 +54,7 @@ public class GypFXML extends Application {
             }
         }
         this.stage.setScene(scene);
+        this.eventManager.emit(Event.SCREEN_CHANGED, resourceName);
         this.stage.show();
     }
     
@@ -75,5 +80,9 @@ public class GypFXML extends Application {
     
     public Part getActivePart() {
         return activePart;
+    }
+    
+    public EventManager getEventManager() {
+        return eventManager;
     }
 }

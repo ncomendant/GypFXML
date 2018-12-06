@@ -1,6 +1,8 @@
 package gypfxml.ui.add_part;
 
 import gypfxml.GypFXML;
+import gypfxml.misc.Event;
+import gypfxml.misc.EventManager;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,10 +35,19 @@ public class AddPartScreenController implements Initializable {
     }
     
     
+    private void refresh() {
+        //TODO
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(url.toString());
-        // TODO
-    }    
+        EventManager eventManager = GypFXML.getInstance().getEventManager();
+        
+        eventManager.on(Event.SCREEN_CHANGED, (Object... data) -> {
+            if (data[0].equals(ScreenResource.ADD_PART)) {
+                refresh();
+            }
+        });
+    }
     
 }
