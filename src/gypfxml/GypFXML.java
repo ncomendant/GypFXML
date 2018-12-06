@@ -150,4 +150,14 @@ public class GypFXML extends Application {
     public EventManager getEventManager() {
         return eventManager;
     }
+    
+    public boolean deletePart(int partIndex) {
+        Part part = filteredParts.get(partIndex);
+        return inventory.deletePart(part);
+    }
+    
+    public boolean deleteProduct(int productIndex) {
+        Product product = filteredProducts.get(productIndex);
+        return inventory.removeProduct(product.getProductID());
+    }
 }

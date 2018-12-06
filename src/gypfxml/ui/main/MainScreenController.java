@@ -12,10 +12,14 @@ import gypfxml.core.Part;
 import gypfxml.core.Product;
 import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableView;
 
 
 public class MainScreenController implements Initializable {
+    
+    private GypFXML app;
     
     @FXML
     TableView<Part> partTable;
@@ -39,7 +43,10 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleDeletePart(ActionEvent event) {
-        
+        int index = partTable.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            app.deletePart(index);
+        }
     }
     
     @FXML
@@ -59,7 +66,10 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleDeleteProduct(ActionEvent event) {
-        
+        int index = productTable.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            app.deleteProduct(index);
+        }
     }
     
     @FXML
@@ -74,7 +84,7 @@ public class MainScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        GypFXML app = GypFXML.getInstance();
+        app = GypFXML.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.MAIN)) {
