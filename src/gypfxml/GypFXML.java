@@ -18,7 +18,6 @@ public class GypFXML extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         URL rsc = getClass().getResource("ui/main/MainScreen.fxml");
-//        URL rsc = getClass().getResource("Simple.fxml");
         Parent root = FXMLLoader.load(rsc);
         
         Scene scene = new Scene(root);
