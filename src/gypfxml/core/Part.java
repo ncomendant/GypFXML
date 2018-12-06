@@ -1,4 +1,4 @@
-package gypfxml.model;
+package gypfxml.core;
 
 public abstract class Part {
 	private int partID;

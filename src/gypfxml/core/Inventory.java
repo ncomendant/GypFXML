@@ -1,14 +1,15 @@
-package gypfxml.model;
+package gypfxml.core;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Inventory {
-	private ArrayList<Product> products;
-	private ArrayList<Part> allParts;
+	private ObservableList<Product> products;
+	private ObservableList<Part> allParts;
 	
 	public Inventory() {
-            products = new ArrayList<>();
-            allParts = new ArrayList<>();
+            products = FXCollections.observableArrayList();
+            allParts = FXCollections.observableArrayList();
 	}
 	
 	public void addProduct(Product product) {

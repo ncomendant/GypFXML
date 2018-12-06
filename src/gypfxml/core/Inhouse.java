@@ -1,4 +1,4 @@
-package gypfxml.model;
+package gypfxml.core;
 
 public class Inhouse extends Part {
 	
