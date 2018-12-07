@@ -101,7 +101,7 @@ public class ModifyProductScreenController implements ScreenController {
         invInp.setText(Integer.toString(product.getInStock()));
         priceInp.setText(Double.toString(product.getPrice()));
         maxInp.setText(Integer.toString(product.getMax()));
-        minInp.setText(Integer.toString(product.getMax()));
+        minInp.setText(Integer.toString(product.getMin()));
         searchInp.clear();
         
         allPartsList.setPredicate(p -> true); //show all parts
