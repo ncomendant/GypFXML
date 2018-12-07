@@ -3,6 +3,7 @@ package gypfxml.ui.add_product;
 
 import gypfxml.App;
 import gypfxml.core.Part;
+import gypfxml.core.Product;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,7 +65,25 @@ public class AddProductScreenController implements ScreenController {
     
     @FXML
     private void handleSave(ActionEvent event) {
-        //TODO
+        String name = nameInp.getText();
+        int inStock = Integer.parseInt(invInp.getText());
+        double price = Double.parseDouble(priceInp.getText());
+        int min = Integer.parseInt(minInp.getText());
+        int max = Integer.parseInt(maxInp.getText());
+        
+        Product product = new Product();
+        product.setName(name);
+        product.setInStock(inStock);
+        product.setPrice(price);
+        product.setMin(min);
+        product.setMax(max);
+        
+        for (Part part : addedPartsList) {
+            product.addAssociatedPart(part);
+        }
+        
+        app.addProduct(product);
+        app.showScreen(ScreenResource.MAIN);
     }
     
     @FXML
@@ -82,6 +101,8 @@ public class AddProductScreenController implements ScreenController {
         searchInp.clear();
         
         allPartsList.setPredicate(p -> true); //show all parts
+        
+        addedPartsList.clear();
         
         nameInp.requestFocus();
     }
