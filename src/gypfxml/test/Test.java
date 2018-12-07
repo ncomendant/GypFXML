@@ -11,13 +11,9 @@ public class Test {
         for (int i = 0; i < count; i++) {
             Part part;
             if (Math.random() < 0.5) {
-                Inhouse inHousePart = new Inhouse();
-                inHousePart.setMachineID(Test.randNum(0, 1000));
-                part = inHousePart;
+                part = new Inhouse(Test.randNum(0, 1000));
             } else {
-                Outsourced outsourcedPart = new Outsourced();
-                outsourcedPart.setCompanyName(UUID.randomUUID().toString());
-                part = outsourcedPart;
+                part = new Outsourced(UUID.randomUUID().toString());
             }
             part.setInStock(Test.randNum(0, 99));
             part.setMin(Test.randNum(0, 50));
