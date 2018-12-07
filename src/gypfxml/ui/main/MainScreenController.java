@@ -13,6 +13,7 @@ import gypfxml.core.Product;
 import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 
 public class MainScreenController implements Initializable {
@@ -23,20 +24,28 @@ public class MainScreenController implements Initializable {
     TableView<Part> partTable;
     @FXML
     TableView<Product> productTable;
+    @FXML
+    TextField partInp;
+    @FXML
+    TextField productInp;
         
     @FXML
     private void handleSearchPart(ActionEvent event) {
-        
+        String keyword = partInp.getText();
+        app.searchPart(keyword);
     }
     
     @FXML
     private void handleAddPart(ActionEvent event) {
-        GypFXML.getInstance().showScene(ScreenResource.ADD_PART);
+        app.showScene(ScreenResource.ADD_PART);
     }
     
     @FXML
     private void handleModifyPart(ActionEvent event) {
-        
+        int index = partTable.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            app.modifyPart(index);
+        }
     }
     
     @FXML
@@ -49,7 +58,8 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleSearchProduct(ActionEvent event) {
-        
+        String keyword = productInp.getText();
+        app.searchProduct(keyword);
     }
     
     @FXML
@@ -59,7 +69,10 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleModifyProduct(ActionEvent event) {
-        
+        int index = partTable.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            app.modifyProduct(index);
+        }
     }
     
     @FXML

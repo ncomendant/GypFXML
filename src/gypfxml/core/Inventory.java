@@ -38,6 +38,15 @@ public class Inventory {
 	public void updateProduct(int productID) {
 	    //Defined solely to adhere to UML specifications
 	}
+        
+        public void updateProduct(Product product) {
+            for (int i = 0; i < products.size(); i++) {
+                if (products.get(i).getProductID()== product.getProductID()) {
+                    products.set(i, product);
+                    break;
+                }
+            }
+        }
 	
 	public void addPart(Part part) {
             allParts.add(part);
@@ -59,6 +68,15 @@ public class Inventory {
 	public void updatePart(int partID) {
             //Defined solely to adhere to UML specifications
 	}
+        
+        public void updatePart(Part part) {
+            for (int i = 0; i < allParts.size(); i++) {
+                if (allParts.get(i).getPartID() == part.getPartID()) {
+                    allParts.set(i, part);
+                    break;
+                }
+            }
+        }
         
         public ObservableList<Product> getProducts() {
             return products;

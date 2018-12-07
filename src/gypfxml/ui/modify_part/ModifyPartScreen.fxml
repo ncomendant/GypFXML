@@ -11,7 +11,7 @@
    <children>
       <HBox prefHeight="55.0" prefWidth="600.0">
          <children>
-            <Label text="Modify Part" textFill="#055ba6">
+            <Label text="Add Part" textFill="#055ba6">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -19,7 +19,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Label>
-            <RadioButton mnemonicParsing="false" onAction="#handleInHouseSelect" selected="true" text="In-House" HBox.hgrow="ALWAYS">
+            <RadioButton fx:id="inHouseRadio" mnemonicParsing="false" onAction="#handleInHouseSelect" selected="true" text="In-House" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="25.0" />
                </HBox.margin>
@@ -27,7 +27,7 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" onAction="#handleOutsourcedSelect" text="Outsourced" toggleGroup="$type" HBox.hgrow="ALWAYS">
+            <RadioButton fx:id="outsourcedRadio" mnemonicParsing="false" onAction="#handleOutsourcedSelect" text="Outsourced" toggleGroup="$type" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="25.0" />
                </HBox.margin>
@@ -53,7 +53,7 @@
             <Label text="Inv" GridPane.rowIndex="2" />
             <Label text="Price/Cost" GridPane.rowIndex="3" />
             <Label fx:id="machineCompanyLab" text="Machine ID" GridPane.rowIndex="5" />
-            <TextField fx:id="idInp" disable="true" GridPane.columnIndex="1" />
+            <TextField fx:id="idInp" disable="true" text="Auto Gen - Disabled" GridPane.columnIndex="1" />
             <TextField fx:id="nameInp" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="invInp" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="priceInp" GridPane.columnIndex="1" GridPane.rowIndex="3" />

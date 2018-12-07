@@ -60,13 +60,9 @@ public class AddPartScreenController implements Initializable {
         
         Part part;
         if (inHouse) {
-            Inhouse inhousePart = new Inhouse();
-            inhousePart.setMachineID(Integer.parseInt(machineCompany));
-            part = inhousePart;
+            part = new Inhouse(Integer.parseInt(machineCompany));
         } else {
-            Outsourced outsourcedPart = new Outsourced();
-            outsourcedPart.setCompanyName(machineCompany);
-            part = outsourcedPart;
+            part = new Outsourced(machineCompany);
         }
         
         part.setName(name);

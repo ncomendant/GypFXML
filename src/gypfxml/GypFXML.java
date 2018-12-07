@@ -22,15 +22,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
 public class GypFXML extends Application {
     
     private static GypFXML instance;
     
     private Inventory inventory;
     
-    private Part activePart;
-    private Product activeProduct;
+    private int activePartIndex;
+    private int activeProductIndex;
     
     private Stage stage;
     private Map<String, Scene> scenes;
@@ -49,8 +48,8 @@ public class GypFXML extends Application {
         scenes = new HashMap<>();
         eventManager = new EventManager();
         instance = this;
-        activePart = null;
-        activeProduct = null;
+        activePartIndex = -1;
+        activeProductIndex = -1;
         nextPartId = 1;
         nextProductId = 1;
         inventory = new Inventory();
@@ -131,20 +130,50 @@ public class GypFXML extends Application {
         launch(args);
     }
     
-    public void setActiveProduct(Product activeProduct) {
-        this.activeProduct = activeProduct;
+    public void updatePart(Part part) {
+        inventory.updatePart(part);
+    }
+    
+    public void updateProduct(Product product) {
+        inventory.updateProduct(product);
     }
     
     public Product getActiveProduct() {
-        return activeProduct;
-    }
-    
-    public void setActivePart(Part activePart) {
-        this.activePart = activePart;
+        if (activeProductIndex < 0) return null;
+        return filteredProducts.get(activeProductIndex);
     }
     
     public Part getActivePart() {
-        return activePart;
+        if (activePartIndex < 0) return null;
+        return filteredParts.get(activePartIndex);
+    }
+    
+    public void searchPart(String keyword) {
+        String normalizedKeyword = keyword.trim().toLowerCase();
+        if (normalizedKeyword.length() == 0) {
+            filteredParts.setPredicate(part -> true);
+        } else {
+            filteredParts.setPredicate(part -> part.getName().toLowerCase().contains(normalizedKeyword));
+        }
+    }
+    
+    public void searchProduct(String keyword) {
+        String normalizedKeyword = keyword.trim().toLowerCase();
+        if (normalizedKeyword.length() == 0) {
+            filteredProducts.setPredicate(product -> true);
+        } else {
+            filteredProducts.setPredicate(product -> product.getName().toLowerCase().contains(normalizedKeyword));
+        }
+    }
+    
+    public void modifyPart(int partIndex) {
+        activePartIndex = partIndex;
+        showScene(ScreenResource.MODIFY_PART);
+    }
+    
+    public void modifyProduct(int productIndex) {
+        activeProductIndex = productIndex;
+        showScene(ScreenResource.MODIFY_PRODUCT);
     }
     
     public EventManager getEventManager() {
