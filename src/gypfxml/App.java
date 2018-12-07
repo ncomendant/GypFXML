@@ -51,6 +51,7 @@ public class App extends Application {
         nextProductId = 1;
         inventory = new Inventory();
         Test.addRandomParts(this, 100);
+        Test.addRandomProducts(this, inventory.getParts(), 10);
         showScreen(ScreenResource.MAIN);
         stage.show();
     }
