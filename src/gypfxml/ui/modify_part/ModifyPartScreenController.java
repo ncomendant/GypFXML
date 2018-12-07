@@ -24,6 +24,8 @@ public class ModifyPartScreenController implements Initializable {
     @FXML
     private RadioButton inHouseRadio;
     @FXML
+    private RadioButton outsourcedRadio;
+    @FXML
     private Label machineCompanyLab;
     @FXML
     private TextField idInp;
@@ -60,7 +62,8 @@ public class ModifyPartScreenController implements Initializable {
         int min = Integer.parseInt(minInp.getText());
         int max = Integer.parseInt(maxInp.getText());
         String machineCompany = machineCompanyInp.getText();
-                
+        int partID = part.getPartID();
+        
         if (inHouse) {
             int machineID = Integer.parseInt(machineCompany);
             if (part instanceof Inhouse) {
@@ -76,6 +79,7 @@ public class ModifyPartScreenController implements Initializable {
             }
         }
         
+        part.setPartID(partID);
         part.setName(name);
         part.setInStock(inStock);
         part.setPrice(price);
@@ -110,7 +114,7 @@ public class ModifyPartScreenController implements Initializable {
             machineCompanyInp.setText(Integer.toString(machineId));
         } else {
             inHouse = false;
-            inHouseRadio.setSelected(false);
+            outsourcedRadio.setSelected(true);
             String companyName = ((Outsourced)part).getCompanyName();
             machineCompanyInp.setText(companyName);
         }
