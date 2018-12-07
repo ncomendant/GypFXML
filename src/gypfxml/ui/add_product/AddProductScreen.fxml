@@ -7,5 +7,128 @@
 <?import java.lang.*?>
 <?import javafx.scene.web.*?>
 
-<Pane>
-</Pane>
+<HBox alignment="CENTER" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #dddddd;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gypfxml.ui.add_product.AddProductScreenController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="780.0" spacing="10.0" style="-fx-border-style: solid; -fx-border-color: #999999; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox prefWidth="300.0">
+               <children>
+                  <Label text="Add Product" textFill="#055ba6">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="48.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="252.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="ID" />
+                        <Label text="Name" GridPane.rowIndex="1" />
+                        <Label text="Inv" GridPane.rowIndex="2" />
+                        <Label text="Price" GridPane.rowIndex="3" />
+                        <Label text="Max" GridPane.rowIndex="4" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <TextField fx:id="maxInp" HBox.hgrow="ALWAYS" />
+                              <Label minWidth="25.0" text="Min" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="minInp" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="idInp" disable="true" text="Auto Gen - Disabled" GridPane.columnIndex="1" />
+                        <TextField fx:id="nameInp" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="invInp" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="priceInp" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleSearch" prefHeight="30.0" prefWidth="75.0" text="Search" />
+                        <TextField fx:id="searchInp" promptText="Part Name" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="allPartsTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Part ID" />
+                      <TableColumn prefWidth="75.0" text="Part Name" />
+                        <TableColumn prefWidth="75.0" text="Inventory Level" />
+                        <TableColumn prefWidth="75.0" text="Price per Unit" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="448.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleAddPart" prefHeight="30.0" prefWidth="75.0" text="Add">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView fx:id="addedPartsTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Part ID" />
+                      <TableColumn prefWidth="75.0" text="Part Name" />
+                        <TableColumn prefWidth="75.0" text="Inventory Level" />
+                        <TableColumn prefWidth="75.0" text="Price per Unit" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="558.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleDeletePart" prefHeight="30.0" prefWidth="75.0" text="Delete" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="558.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" prefWidth="75.0" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="30.0" prefWidth="75.0" text="Cancel" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</HBox>

@@ -64,7 +64,7 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleAddProduct(ActionEvent event) {
-        
+        app.showScene(ScreenResource.ADD_PRODUCT);
     }
     
     @FXML
