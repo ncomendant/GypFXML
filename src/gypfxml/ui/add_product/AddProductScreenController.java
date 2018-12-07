@@ -49,12 +49,18 @@ public class AddProductScreenController implements Initializable {
     
     @FXML
     private void handleAddPart(ActionEvent event) {
-        //TODO
+        Part part = allPartsTable.getSelectionModel().getSelectedItem();
+        if (part != null) {
+            addedPartsList.add(part);
+        }
     }
     
     @FXML
     private void handleDeletePart(ActionEvent event) {
-        //TODO
+        Part part = addedPartsTable.getSelectionModel().getSelectedItem();
+        if (part != null) {
+            addedPartsList.remove(part);
+        }
     }
     
     @FXML
