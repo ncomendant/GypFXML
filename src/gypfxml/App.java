@@ -65,7 +65,7 @@ public class App extends Application {
                 scene = new Scene(parent);
                 scenes.put(screenResource, scene);
             } catch (IOException e) {
-                System.out.println(e);
+                System.err.println(e);
             }
         } else {
             screenControllers.get(screenResource).refresh();
@@ -121,10 +121,6 @@ public class App extends Application {
     
     public void updatePart(Part part) {
         inventory.updatePart(part);
-    }
-    
-    public void updateProduct(Product product) {
-        inventory.updateProduct(product);
     }
     
     public Product getSelectedProduct() {

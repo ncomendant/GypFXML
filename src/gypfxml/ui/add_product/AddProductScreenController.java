@@ -22,6 +22,8 @@ public class AddProductScreenController implements ScreenController {
     private FilteredList<Part> allPartsList;
     private ObservableList<Part> addedPartsList;
     
+    
+    
     @FXML
     private TextField maxInp;
     @FXML

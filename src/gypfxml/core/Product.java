@@ -74,25 +74,29 @@ public class Product {
 	}
 	
 	public void addAssociatedPart(Part part) {
-		associatedParts.add(part);
+            associatedParts.add(part);
 	}
 	
 	public boolean removeAssociatedPart(int partID) {
-		Part part = lookupAssociatedPart(partID);
-		if (part != null) {
-			associatedParts.remove(part);
-			return true; 
-		} else {			
-			return false;
-		}
+            Part part = lookupAssociatedPart(partID);
+            if (part != null) {
+                    associatedParts.remove(part);
+                    return true; 
+            } else {			
+                    return false;
+            }
 	}
 	
 	public Part lookupAssociatedPart(int partID) {
-		for (Part part : associatedParts) {
-			if (part.getPartID() == partID) {
-				return part;
-			}
-		}
-		return null;
+            for (Part part : associatedParts) {
+                    if (part.getPartID() == partID) {
+                            return part;
+                    }
+            }
+            return null;
 	}
+        
+        public ObservableList<Part> getAssociatedParts() {
+            return associatedParts;
+        }
 }
