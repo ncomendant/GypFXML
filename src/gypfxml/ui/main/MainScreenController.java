@@ -12,6 +12,7 @@ import gypfxml.core.Part;
 import gypfxml.core.Product;
 import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -19,6 +20,9 @@ import javafx.scene.control.TextField;
 public class MainScreenController implements Initializable {
     
     private GypFXML app;
+    
+    private FilteredList<Part> filteredParts;
+    private FilteredList<Product> filteredProducts;
     
     @FXML
     TableView<Part> partTable;
@@ -32,7 +36,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private void handleSearchPart(ActionEvent event) {
         String keyword = partInp.getText();
-        app.searchPart(keyword);
+        app.filterParts(keyword, filteredParts);
     }
     
     @FXML
@@ -42,24 +46,24 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleModifyPart(ActionEvent event) {
-        int index = partTable.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
-            app.modifyPart(index);
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        if (selectedPart != null) {
+            app.modifyPart(selectedPart);
         }
     }
     
     @FXML
     private void handleDeletePart(ActionEvent event) {
-        int index = partTable.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
-            app.deletePart(index);
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        if (selectedPart != null) {
+            app.deletePart(selectedPart);
         }
     }
     
     @FXML
     private void handleSearchProduct(ActionEvent event) {
         String keyword = productInp.getText();
-        app.searchProduct(keyword);
+        app.filterProducts(keyword, filteredProducts);
     }
     
     @FXML
@@ -69,17 +73,17 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleModifyProduct(ActionEvent event) {
-        int index = partTable.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
-            app.modifyProduct(index);
+        Product product = productTable.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            app.modifyProduct(product);
         }
     }
     
     @FXML
     private void handleDeleteProduct(ActionEvent event) {
-        int index = productTable.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
-            app.deleteProduct(index);
+        Product product = productTable.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            app.deleteProduct(product);
         }
     }
     
@@ -103,7 +107,9 @@ public class MainScreenController implements Initializable {
             }
         });
         
-        app.bindPartTable(partTable);
+        filteredParts = app.initPartTable(partTable);
+        filteredProducts = app.initProductTable(productTable);
+        
     }
     
 }

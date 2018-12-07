@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,33 +29,28 @@ public class GypFXML extends Application {
     
     private Inventory inventory;
     
-    private int activePartIndex;
-    private int activeProductIndex;
+    private Part  selectedPart;
+    private Product selectedProduct;
     
     private Stage stage;
     private Map<String, Scene> scenes;
     private EventManager eventManager;
-    
-    private FilteredList<Part> filteredParts;
-    private FilteredList<Product> filteredProducts;
     
     private int nextPartId;
     private int nextProductId;
     
     @Override
     public void start(Stage stage) throws Exception {
+        instance = this;
         this.stage = stage;
         stage.setTitle("Inventory Management Application");
         scenes = new HashMap<>();
         eventManager = new EventManager();
-        instance = this;
-        activePartIndex = -1;
-        activeProductIndex = -1;
+        selectedPart = null;
+        selectedProduct = null;
         nextPartId = 1;
         nextProductId = 1;
         inventory = new Inventory();
-        filteredParts = new FilteredList<>(inventory.getParts(), p -> true);
-        filteredProducts = new FilteredList<>(inventory.getProducts(), p -> true);
         showScene(ScreenResource.MAIN);
         Test.addRandomParts(this, 100);
     }
@@ -76,29 +72,23 @@ public class GypFXML extends Application {
         this.stage.show();
     }
     
-    public void bindPartTable(TableView<Part> table) {
-        List<TableColumn<Part, ?>> columns = table.getColumns();
-        
-        TableColumn<Part, Integer> idCol = (TableColumn<Part, Integer>) columns.get(0);
-        idCol.setCellValueFactory(new PropertyValueFactory<>("partID"));
-        
-        TableColumn<Part, String> nameCol = (TableColumn<Part, String>) columns.get(1);
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        
-        TableColumn<Part, Integer> invCol = (TableColumn<Part, Integer>) columns.get(2);
-        invCol.setCellValueFactory(new PropertyValueFactory<>("inStock"));
-        
-        TableColumn<Part, Double> priceCol = (TableColumn<Part, Double>) columns.get(3);
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        table.setItems(filteredParts);        
+    public FilteredList<Part> initPartTable(TableView<Part> table) {
+        return initPartTable(table, inventory.getParts());
     }
     
-    public void bindProductTable(TableView<Product> table) {
-        List<TableColumn<Product, ?>> columns = table.getColumns();
+    public FilteredList<Part> initPartTable(TableView<Part> table, ObservableList<Part> list) {
+        return initTable(table, list, "partID");
+    }
+    
+    public FilteredList<Product> initProductTable(TableView<Product> table) {
+        return initTable(table, inventory.getProducts(), "productID");
+    }
+    
+    private <T> FilteredList<T> initTable(TableView<T> table, ObservableList<T> list, String idPropertyName) {
+        List<TableColumn<T, ?>> columns = table.getColumns();
         
         TableColumn<Product, Integer> idCol = (TableColumn<Product, Integer>) columns.get(0);
-        idCol.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>(idPropertyName));
         
         TableColumn<Product, String> nameCol = (TableColumn<Product, String>) columns.get(1);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -109,7 +99,9 @@ public class GypFXML extends Application {
         TableColumn<Product, Double> priceCol = (TableColumn<Product, Double>) columns.get(3);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         
-        table.setItems(filteredProducts);
+        FilteredList<T> filteredList = new FilteredList<>(list, p -> true);
+        table.setItems(filteredList);
+        return filteredList;
     }
     
     public void addPart(Part part) {
@@ -122,14 +114,6 @@ public class GypFXML extends Application {
         inventory.addProduct(product);
     }
     
-    public static GypFXML getInstance() {
-        return instance;
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
     public void updatePart(Part part) {
         inventory.updatePart(part);
     }
@@ -138,41 +122,39 @@ public class GypFXML extends Application {
         inventory.updateProduct(product);
     }
     
-    public Product getActiveProduct() {
-        if (activeProductIndex < 0) return null;
-        return filteredProducts.get(activeProductIndex);
+    public Product getSelectedProduct() {
+        return selectedProduct;
     }
     
-    public Part getActivePart() {
-        if (activePartIndex < 0) return null;
-        return filteredParts.get(activePartIndex);
+    public Part getSelectedPart() {
+        return selectedPart;
     }
     
-    public void searchPart(String keyword) {
+    public void filterParts(String keyword, FilteredList<Part> list) {
         String normalizedKeyword = keyword.trim().toLowerCase();
         if (normalizedKeyword.length() == 0) {
-            filteredParts.setPredicate(part -> true);
+            list.setPredicate(part -> true);
         } else {
-            filteredParts.setPredicate(part -> part.getName().toLowerCase().contains(normalizedKeyword));
+            list.setPredicate(part -> part.getName().toLowerCase().contains(normalizedKeyword));
         }
     }
     
-    public void searchProduct(String keyword) {
+    public void filterProducts(String keyword, FilteredList<Product> list) {
         String normalizedKeyword = keyword.trim().toLowerCase();
         if (normalizedKeyword.length() == 0) {
-            filteredProducts.setPredicate(product -> true);
+            list.setPredicate(product -> true);
         } else {
-            filteredProducts.setPredicate(product -> product.getName().toLowerCase().contains(normalizedKeyword));
+            list.setPredicate(product -> product.getName().toLowerCase().contains(normalizedKeyword));
         }
     }
     
-    public void modifyPart(int partIndex) {
-        activePartIndex = partIndex;
+    public void modifyPart(Part selectedPart) {
+        this.selectedPart = selectedPart;
         showScene(ScreenResource.MODIFY_PART);
     }
     
-    public void modifyProduct(int productIndex) {
-        activeProductIndex = productIndex;
+    public void modifyProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
         showScene(ScreenResource.MODIFY_PRODUCT);
     }
     
@@ -180,13 +162,19 @@ public class GypFXML extends Application {
         return eventManager;
     }
     
-    public boolean deletePart(int partIndex) {
-        Part part = filteredParts.get(partIndex);
+    public boolean deletePart(Part part) {
         return inventory.deletePart(part);
     }
     
-    public boolean deleteProduct(int productIndex) {
-        Product product = filteredProducts.get(productIndex);
+    public boolean deleteProduct(Product product) {
         return inventory.removeProduct(product.getProductID());
+    }
+    
+    public static GypFXML getInstance() {
+        return instance;
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
     }
 }

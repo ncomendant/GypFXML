@@ -100,7 +100,7 @@ public class ModifyPartScreenController implements Initializable {
     }
     
     private void refresh() {
-        part = app.getActivePart();
+        part = app.getSelectedPart();
         
         if (part == null) {
             app.showScene(ScreenResource.MAIN);
