@@ -29,7 +29,7 @@
                            </font>
                         </Text>
                         <Button mnemonicParsing="false" onAction="#handleSearchPart" text="Search" />
-                        <TextField fx:id="partInp" />
+                        <TextField fx:id="partInp" promptText="Part Name" />
                      </children>
                   </HBox>
                   <TableView fx:id="partTable" prefHeight="250.0" prefWidth="278.0" VBox.vgrow="ALWAYS">
@@ -68,7 +68,7 @@
                            </font>
                         </Text>
                         <Button mnemonicParsing="false" onAction="#handleSearchProduct" text="Search" />
-                        <TextField fx:id="productInp" />
+                        <TextField fx:id="productInp" promptText="Product Name" />
                      </children>
                   </HBox>
                   <TableView fx:id="productTable" prefHeight="250.0" prefWidth="278.0" VBox.vgrow="ALWAYS">
