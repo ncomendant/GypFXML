@@ -1,6 +1,6 @@
 package gypfxml.ui.add_part;
 
-import gypfxml.GypFXML;
+import gypfxml.App;
 import gypfxml.misc.Event;
 import gypfxml.core.Inhouse;
 import gypfxml.core.Outsourced;
@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 public class AddPartScreenController implements Initializable {
     
-    private GypFXML app;
+    private App app;
     private boolean inHouse = true;
     
     @FXML
@@ -72,12 +72,12 @@ public class AddPartScreenController implements Initializable {
         part.setMax(max);
         
         app.addPart(part);
-        GypFXML.getInstance().showScene(ScreenResource.MAIN);
+        App.getInstance().showScene(ScreenResource.MAIN);
     }
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        GypFXML.getInstance().showScene(ScreenResource.MAIN);
+        App.getInstance().showScene(ScreenResource.MAIN);
     }
     
     private void updateMachineCompanyLab() {
@@ -102,7 +102,7 @@ public class AddPartScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        app = GypFXML.getInstance();
+        app = App.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.ADD_PART)) {

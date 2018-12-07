@@ -7,7 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import gypfxml.GypFXML;
+import gypfxml.App;
 import gypfxml.core.Part;
 import gypfxml.core.Product;
 import gypfxml.misc.Event;
@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 
 public class MainScreenController implements Initializable {
     
-    private GypFXML app;
+    private App app;
     
     private FilteredList<Part> filteredParts;
     private FilteredList<Product> filteredProducts;
@@ -99,7 +99,7 @@ public class MainScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        app = GypFXML.getInstance();
+        app = App.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.MAIN)) {

@@ -1,13 +1,13 @@
 package gypfxml.test;
 
-import gypfxml.GypFXML;
+import gypfxml.App;
 import gypfxml.core.Inhouse;
 import gypfxml.core.Outsourced;
 import gypfxml.core.Part;
 import java.util.UUID;
 
 public class Test {
-    public static void addRandomParts(GypFXML app, int count) {
+    public static void addRandomParts(App app, int count) {
         for (int i = 0; i < count; i++) {
             Part part;
             if (Math.random() < 0.5) {

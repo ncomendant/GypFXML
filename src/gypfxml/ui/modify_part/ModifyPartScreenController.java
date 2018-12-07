@@ -1,7 +1,7 @@
 package gypfxml.ui.modify_part;
 
 
-import gypfxml.GypFXML;
+import gypfxml.App;
 import gypfxml.core.Inhouse;
 import gypfxml.core.Outsourced;
 import gypfxml.core.Part;
@@ -17,7 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 public class ModifyPartScreenController implements Initializable {    
-    private GypFXML app;
+    private App app;
     private boolean inHouse;
     private Part part;
     
@@ -133,7 +133,7 @@ public class ModifyPartScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        app = GypFXML.getInstance();
+        app = App.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.MODIFY_PART)) {

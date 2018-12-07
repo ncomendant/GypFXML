@@ -23,9 +23,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class GypFXML extends Application {
+public class App extends Application {
     
-    private static GypFXML instance;
+    private static App instance;
     
     private Inventory inventory;
     
@@ -170,7 +170,7 @@ public class GypFXML extends Application {
         return inventory.removeProduct(product.getProductID());
     }
     
-    public static GypFXML getInstance() {
+    public static App getInstance() {
         return instance;
     }
     

@@ -1,7 +1,7 @@
 package gypfxml.ui.add_product;
 
 
-import gypfxml.GypFXML;
+import gypfxml.App;
 import gypfxml.core.Part;
 import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 
 public class AddProductScreenController implements Initializable {
     
-    private GypFXML app;
+    private App app;
     
     @FXML
     private TextField maxInp;
@@ -76,7 +76,7 @@ public class AddProductScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        app = GypFXML.getInstance();
+        app = App.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
             if (data[0].equals(ScreenResource.ADD_PART)) {
