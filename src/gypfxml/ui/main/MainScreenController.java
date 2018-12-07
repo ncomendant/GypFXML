@@ -6,18 +6,17 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import gypfxml.App;
 import gypfxml.core.Part;
 import gypfxml.core.Product;
-import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import gypfxml.ui.ScreenController;
 
 
-public class MainScreenController implements Initializable {
+public class MainScreenController implements ScreenController {
     
     private App app;
     
@@ -41,7 +40,7 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleAddPart(ActionEvent event) {
-        app.showScene(ScreenResource.ADD_PART);
+        app.showScreen(ScreenResource.ADD_PART);
     }
     
     @FXML
@@ -68,7 +67,7 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void handleAddProduct(ActionEvent event) {
-        app.showScene(ScreenResource.ADD_PRODUCT);
+        app.showScreen(ScreenResource.ADD_PRODUCT);
     }
     
     @FXML
@@ -93,23 +92,20 @@ public class MainScreenController implements Initializable {
         Platform.exit();
     }
     
-    private void refresh() {
+    @Override
+    public void refresh() {
         //TODO
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         app = App.getInstance();
-        
-        app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
-            if (data[0].equals(ScreenResource.MAIN)) {
-                refresh();
-            }
-        });
+        app.setScreenController(ScreenResource.MAIN, this);
         
         filteredParts = app.initPartTable(partTable);
         filteredProducts = app.initProductTable(productTable);
         
+        refresh();
     }
     
 }

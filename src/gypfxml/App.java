@@ -1,7 +1,5 @@
 package gypfxml;
 
-import gypfxml.misc.Event;
-import gypfxml.misc.EventManager;
 import gypfxml.ui.ScreenResource;
 import gypfxml.core.Inventory;
 import gypfxml.core.Part;
@@ -22,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import gypfxml.ui.ScreenController;
 
 public class App extends Application {
     
@@ -34,7 +33,7 @@ public class App extends Application {
     
     private Stage stage;
     private Map<String, Scene> scenes;
-    private EventManager eventManager;
+    private Map<String, ScreenController> screenControllers;
     
     private int nextPartId;
     private int nextProductId;
@@ -45,31 +44,36 @@ public class App extends Application {
         this.stage = stage;
         stage.setTitle("Inventory Management Application");
         scenes = new HashMap<>();
-        eventManager = new EventManager();
+        screenControllers = new HashMap<>();
         selectedPart = null;
         selectedProduct = null;
         nextPartId = 1;
         nextProductId = 1;
         inventory = new Inventory();
-        showScene(ScreenResource.MAIN);
         Test.addRandomParts(this, 100);
+        showScreen(ScreenResource.MAIN);
+        stage.show();
     }
     
-    public void showScene(String resourceName) {
-        Scene scene = scenes.get(resourceName);
+    public void showScreen(String screenResource) {
+        Scene scene = scenes.get(screenResource);
         if (scene == null) {
-            URL rsc = getClass().getResource(resourceName);
+            URL rsc = getClass().getResource(screenResource);
             try {
                 Parent parent = FXMLLoader.load(rsc);
                 scene = new Scene(parent);
-                scenes.put(resourceName, scene);
+                scenes.put(screenResource, scene);
             } catch (IOException e) {
                 System.out.println(e);
             }
+        } else {
+            screenControllers.get(screenResource).refresh();
         }
         this.stage.setScene(scene);
-        this.eventManager.emit(Event.SCREEN_CHANGED, resourceName);
-        this.stage.show();
+    }
+    
+    public void setScreenController(String screenResource, ScreenController screenController) {
+        screenControllers.put(screenResource, screenController);
     }
     
     public FilteredList<Part> initPartTable(TableView<Part> table) {
@@ -150,16 +154,12 @@ public class App extends Application {
     
     public void modifyPart(Part selectedPart) {
         this.selectedPart = selectedPart;
-        showScene(ScreenResource.MODIFY_PART);
+        showScreen(ScreenResource.MODIFY_PART);
     }
     
     public void modifyProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
-        showScene(ScreenResource.MODIFY_PRODUCT);
-    }
-    
-    public EventManager getEventManager() {
-        return eventManager;
+        showScreen(ScreenResource.MODIFY_PRODUCT);
     }
     
     public boolean deletePart(Part part) {

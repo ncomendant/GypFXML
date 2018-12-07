@@ -1,7 +1,6 @@
 package gypfxml.ui.add_part;
 
 import gypfxml.App;
-import gypfxml.misc.Event;
 import gypfxml.core.Inhouse;
 import gypfxml.core.Outsourced;
 import gypfxml.core.Part;
@@ -10,12 +9,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import gypfxml.ui.ScreenController;
 
-public class AddPartScreenController implements Initializable {
+public class AddPartScreenController implements ScreenController {
     
     private App app;
     private boolean inHouse = true;
@@ -72,19 +71,20 @@ public class AddPartScreenController implements Initializable {
         part.setMax(max);
         
         app.addPart(part);
-        App.getInstance().showScene(ScreenResource.MAIN);
+        app.showScreen(ScreenResource.MAIN);
     }
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        App.getInstance().showScene(ScreenResource.MAIN);
+        app.showScreen(ScreenResource.MAIN);
     }
     
     private void updateMachineCompanyLab() {
         machineCompanyLab.setText((inHouse) ? "Machine ID" : "Company Name");
     }
     
-    private void refresh() {
+    @Override
+    public void refresh() {
         inHouse = true;
         inHouseRadio.setSelected(true);
         
@@ -103,12 +103,8 @@ public class AddPartScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         app = App.getInstance();
-        
-        app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
-            if (data[0].equals(ScreenResource.ADD_PART)) {
-                refresh();
-            }
-        });
+        app.setScreenController(ScreenResource.ADD_PART, this);
+        refresh();
     }
     
 }

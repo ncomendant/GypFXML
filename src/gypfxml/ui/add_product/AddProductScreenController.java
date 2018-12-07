@@ -3,7 +3,6 @@ package gypfxml.ui.add_product;
 
 import gypfxml.App;
 import gypfxml.core.Part;
-import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,11 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import gypfxml.ui.ScreenController;
 
-public class AddProductScreenController implements Initializable {
+public class AddProductScreenController implements ScreenController {
     
     private App app;
     private FilteredList<Part> allPartsList;
@@ -70,10 +69,11 @@ public class AddProductScreenController implements Initializable {
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        app.showScene(ScreenResource.MAIN);
+        app.showScreen(ScreenResource.MAIN);
     }
     
-    private void refresh() {
+    @Override
+    public void refresh() {
         nameInp.clear();
         invInp.clear();
         priceInp.clear();
@@ -89,16 +89,13 @@ public class AddProductScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         app = App.getInstance();
-        
-        app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
-            if (data[0].equals(ScreenResource.ADD_PRODUCT)) {
-                refresh();
-            }
-        });
-        
+        app.setScreenController(ScreenResource.ADD_PRODUCT, this);
+
         allPartsList = app.initPartTable(allPartsTable);
         
         addedPartsList = FXCollections.observableArrayList();
         app.initPartTable(addedPartsTable, addedPartsList);
+        
+        refresh();
     }
 }
