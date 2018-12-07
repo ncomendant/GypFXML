@@ -7,6 +7,9 @@ import gypfxml.misc.Event;
 import gypfxml.ui.ScreenResource;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +19,8 @@ import javafx.scene.control.TextField;
 public class AddProductScreenController implements Initializable {
     
     private App app;
+    private FilteredList<Part> allPartsList;
+    private ObservableList<Part> addedPartsList;
     
     @FXML
     private TextField maxInp;
@@ -38,7 +43,8 @@ public class AddProductScreenController implements Initializable {
     
     @FXML
     private void handleSearch(ActionEvent event) {
-        //TODO
+        String keyword = searchInp.getText();
+        app.filterParts(keyword, allPartsList);
     }
     
     @FXML
@@ -69,7 +75,7 @@ public class AddProductScreenController implements Initializable {
         minInp.clear();
         searchInp.clear();
         
-        //TODO - populate/bind tables
+        allPartsList.setPredicate(p -> true); //show all parts
         
         nameInp.requestFocus();
     }
@@ -79,9 +85,14 @@ public class AddProductScreenController implements Initializable {
         app = App.getInstance();
         
         app.getEventManager().on(Event.SCREEN_CHANGED, (Object... data) -> {
-            if (data[0].equals(ScreenResource.ADD_PART)) {
+            if (data[0].equals(ScreenResource.ADD_PRODUCT)) {
                 refresh();
             }
         });
+        
+        allPartsList = app.initPartTable(allPartsTable);
+        
+        addedPartsList = FXCollections.observableArrayList();
+        app.initPartTable(addedPartsTable, addedPartsList);
     }
 }
