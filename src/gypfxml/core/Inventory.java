@@ -1,5 +1,6 @@
 package gypfxml.core;
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -44,7 +45,8 @@ public class Inventory {
 	
 	public boolean deletePart(Part part) {
             boolean removed = allParts.remove(part);
-//            updateAssociatedParts();
+            //Products are not updated per directions from mentor on Course Chatter
+            //updateAssociatedParts();
             return removed;
 	}
 	
@@ -69,19 +71,18 @@ public class Inventory {
                     break;
                 }
             }
-//            updateAssociatedParts();
+            updateAssociatedParts();
         }
   
-// Not necessary according to mentor on Course Chatter
-//        private void updateAssociatedParts() {
-//            for (Product product : products) {
-//                List<Part> productParts = product.getAssociatedParts();
-//                for (int i = productParts.size()-1; i >= 0; i--) {
-//                    int associatedID = productParts.get(i).getPartID();
-//                    productParts.set(i, lookupPart(associatedID));
-//                }
-//            }
-//        }
+        private void updateAssociatedParts() {
+            for (Product product : products) {
+                List<Part> productParts = product.getAssociatedParts();
+                for (int i = productParts.size()-1; i >= 0; i--) {
+                    int associatedID = productParts.get(i).getPartID();
+                    productParts.set(i, lookupPart(associatedID));
+                }
+            }
+        }
         
         public ObservableList<Product> getProducts() {
             return products;
