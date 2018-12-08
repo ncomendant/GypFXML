@@ -76,7 +76,9 @@ public class AddPartScreenController implements ScreenController {
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        app.showScreen(ScreenResource.MAIN);
+        if (app.displayConfirmation("Are you sure you want to cancel?")) {
+            app.showScreen(ScreenResource.MAIN);
+        }
     }
     
     private void updateMachineCompanyLab() {

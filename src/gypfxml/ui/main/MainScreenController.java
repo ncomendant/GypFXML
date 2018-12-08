@@ -54,7 +54,7 @@ public class MainScreenController implements ScreenController {
     @FXML
     private void handleDeletePart(ActionEvent event) {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        if (selectedPart != null) {
+        if (selectedPart != null && app.displayConfirmation("Are you sure you want to delete this part?")) {
             app.deletePart(selectedPart);
         }
     }
@@ -81,7 +81,7 @@ public class MainScreenController implements ScreenController {
     @FXML
     private void handleDeleteProduct(ActionEvent event) {
         Product product = productTable.getSelectionModel().getSelectedItem();
-        if (product != null) {
+        if (product != null && app.displayConfirmation("Are you sure you want to delete this product?")) {
             app.deleteProduct(product);
         }
     }

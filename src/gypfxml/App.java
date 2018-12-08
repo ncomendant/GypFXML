@@ -21,6 +21,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import gypfxml.ui.ScreenController;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class App extends Application {
     
@@ -35,6 +39,9 @@ public class App extends Application {
     private Map<String, Scene> scenes;
     private Map<String, ScreenController> screenControllers;
     
+    private Alert alert;
+    private Alert confirmation;
+    
     private int nextPartId;
     private int nextProductId;
     
@@ -42,6 +49,12 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         instance = this;
         this.stage = stage;
+        alert = new Alert(AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error Dialog");
+        confirmation = new Alert(AlertType.CONFIRMATION);
+        confirmation.setHeaderText(null);
+        confirmation.setTitle("Confirmation Dialog");
         stage.setTitle("Inventory Management Application");
         scenes = new HashMap<>();
         screenControllers = new HashMap<>();
@@ -57,6 +70,10 @@ public class App extends Application {
     }
     
     public void showScreen(String screenResource) {
+        showScreen(screenResource, true);
+    }
+    
+    public void showScreen(String screenResource, boolean toRefresh) {
         Scene scene = scenes.get(screenResource);
         if (scene == null) {
             URL rsc = getClass().getResource(screenResource);
@@ -67,7 +84,7 @@ public class App extends Application {
             } catch (IOException e) {
                 System.err.println(e);
             }
-        } else {
+        } else if (toRefresh) {
             screenControllers.get(screenResource).refresh();
         }
         this.stage.setScene(scene);
@@ -107,6 +124,17 @@ public class App extends Application {
         FilteredList<T> filteredList = new FilteredList<>(list, p -> true);
         table.setItems(filteredList);
         return filteredList;
+    }
+    
+    public void displayError(String error) {
+        alert.setContentText(error);
+        alert.showAndWait();
+    }
+    
+    public boolean displayConfirmation(String message) {
+        confirmation.setContentText(message);
+        Optional<ButtonType> result = confirmation.showAndWait();
+        return result.get()== ButtonType.OK;
     }
     
     public void addPart(Part part) {

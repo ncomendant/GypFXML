@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -92,7 +91,9 @@ public class ModifyPartScreenController implements ScreenController {
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        app.showScreen(ScreenResource.MAIN);
+        if (app.displayConfirmation("Are you sure you want to cancel?")) {
+            app.showScreen(ScreenResource.MAIN);
+        }
     }
     
     private void updateMachineCompanyLab() {

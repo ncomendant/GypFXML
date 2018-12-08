@@ -60,7 +60,7 @@ public class ModifyProductScreenController implements ScreenController {
     @FXML
     private void handleDeletePart(ActionEvent event) {
         Part part = addedPartsTable.getSelectionModel().getSelectedItem();
-        if (part != null) {
+        if (part != null && app.displayConfirmation("Are you sure you want to delete this part?")) {
             addedPartsList.remove(part);
         }
     }
@@ -89,7 +89,9 @@ public class ModifyProductScreenController implements ScreenController {
     
     @FXML
     private void handleCancel(ActionEvent event) {
-        app.showScreen(ScreenResource.MAIN);
+        if (app.displayConfirmation("Are you sure you want to cancel?")) {
+            app.showScreen(ScreenResource.MAIN);
+        }
     }
     
     @Override
