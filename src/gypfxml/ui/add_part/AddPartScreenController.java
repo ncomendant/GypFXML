@@ -50,16 +50,55 @@ public class AddPartScreenController implements ScreenController {
     
     @FXML
     private void handleSave(ActionEvent event) {
+        
         String name = nameInp.getText();
-        int inStock = Integer.parseInt(invInp.getText());
-        double price = Double.parseDouble(priceInp.getText());
-        int min = Integer.parseInt(minInp.getText());
-        int max = Integer.parseInt(maxInp.getText());
         String machineCompany = machineCompanyInp.getText();
+        
+        double price;
+        int inStock, min, max;
+        
+        try {
+            price = Double.parseDouble(priceInp.getText());
+        } catch (NumberFormatException e) {
+            price = 0;
+        }
+        
+        try {
+            inStock = Integer.parseInt(invInp.getText());
+        } catch (NumberFormatException e) {
+            inStock = 0;
+        }
+        
+        try {
+            min = Integer.parseInt(minInp.getText());
+        } catch (NumberFormatException e) {
+            min = 0;
+        }
+        
+        try {
+            max = Integer.parseInt(maxInp.getText());
+        } catch (NumberFormatException e) {
+            max = 0;
+        }
+        
+        try {
+            if (inStock < min || inStock > max) {
+                throw new IllegalArgumentException("Inventory value must be between the minimum and maximum");
+            }
+        } catch (IllegalArgumentException e) {
+            app.displayError(e.getMessage());
+            return;
+        }
         
         Part part;
         if (inHouse) {
-            part = new Inhouse(Integer.parseInt(machineCompany));
+            int machineID;
+            try {
+                machineID = Integer.parseInt(machineCompany);
+            } catch (NumberFormatException e) {
+                machineID = 0;
+            }
+            part = new Inhouse(machineID);
         } else {
             part = new Outsourced(machineCompany);
         }
