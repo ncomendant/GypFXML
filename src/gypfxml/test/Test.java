@@ -17,10 +17,10 @@ public class Test {
             } else {
                 part = new Outsourced(UUID.randomUUID().toString());
             }
-            part.setInStock(Test.randNum(0, 99));
             part.setMin(Test.randNum(0, 50));
             part.setMax(Test.randNum(part.getMin(), 100));
-            part.setPrice(Test.randNum((double)part.getMin(), (double)part.getMax(), 2));
+            part.setInStock(Test.randNum(part.getMin(), part.getMax()));
+            part.setPrice(Test.randNum((double)0, (double)100, 2));
             part.setName(UUID.randomUUID().toString());
             app.addPart(part);
         }
@@ -30,10 +30,10 @@ public class Test {
         
         for (int i = 0; i < count; i++) {
             Product product = new Product();
-            product.setInStock(Test.randNum(0, 99));
             product.setMin(Test.randNum(0, 50));
             product.setMax(Test.randNum(product.getMin(), 100));
-            product.setPrice(Test.randNum((double)product.getMin(), (double)product.getMax(), 2));
+            product.setInStock(Test.randNum(product.getMin(), product.getMax()));
+            product.setPrice(Test.randNum((double)0, (double)100, 2));
             product.setName(UUID.randomUUID().toString());
             
             int partCount = Test.randNum(0, 5);
