@@ -80,18 +80,18 @@ public class Product {
 	public boolean removeAssociatedPart(int partID) {
             Part part = lookupAssociatedPart(partID);
             if (part != null) {
-                    associatedParts.remove(part);
-                    return true; 
+                associatedParts.remove(part);
+                return true; 
             } else {			
-                    return false;
+                return false;
             }
 	}
 	
 	public Part lookupAssociatedPart(int partID) {
             for (Part part : associatedParts) {
-                    if (part.getPartID() == partID) {
-                            return part;
-                    }
+                if (part.getPartID() == partID) {
+                        return part;
+                }
             }
             return null;
 	}
