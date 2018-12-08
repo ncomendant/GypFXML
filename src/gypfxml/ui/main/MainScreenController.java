@@ -88,13 +88,13 @@ public class MainScreenController implements ScreenController {
     
     @FXML
     private void handleExit(ActionEvent event) {
-        System.out.println("Exit");
         Platform.exit();
     }
     
     @Override
     public void refresh() {
-        //TODO
+        partTable.refresh();
+        productTable.refresh();
     }
     
     @Override
