@@ -1,4 +1,4 @@
-# inv-mgmt
+# Inventory Management Application
 An inventory management application. Users are able to add, modify, and delete parts, as well as use those parts in the creation of products.
 
 ## How to Run
